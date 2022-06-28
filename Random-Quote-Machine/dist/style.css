@@ -1,0 +1,72 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: #333;
+  color: #333;
+  font-family: "Raleway", sans-serif;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+a {
+  color: white;
+}
+
+p {
+  margin-top: 1em;
+  color: white;
+}
+
+#quote-box {
+  border-radius: 32px;
+  position: relative;
+  width: 450px;
+  padding: 40px 50px;
+  display: table;
+  background-color: #342224;
+}
+#quote-box .quote-text {
+  text-align: center;
+  width: 450px;
+  height: auto;
+  clear: both;
+  font-weight: 500;
+  font-size: 1.75em;
+}
+#quote-box .quote-author {
+  width: 450px;
+  height: auto;
+  clear: both;
+  padding-top: 20px;
+  font-size: 1em;
+  text-align: right;
+}
+#quote-box .buttons {
+  width: 450px;
+  margin: auto;
+  display: block;
+}
+#quote-box .buttons .button {
+  height: 38px;
+  border: none;
+  border-radius: 32px;
+  color: #fff;
+  background-color: #333;
+  outline: none;
+  font-size: 0.85em;
+  padding: 8px 18px 6px 18px;
+  margin-top: 30px;
+  opacity: 1;
+  cursor: pointer;
+}
+#quote-box .buttons .button:hover {
+  opacity: 0.8;
+}
+#quote-box .buttons .button#new-quote {
+  float: right;
+}

@@ -1,0 +1,79 @@
+$darkAccent: #224b4b
+$backgroundBase: #40E0D0
+
+html, body
+  height: 100%
+  width: 100%
+  background: lighten($backgroundBase, 12%)
+  
+h1 
+ border-bottom: 4px solid black
+  
+.container
+  width: 100%
+  height: 100%
+  display: flex
+  
+.editorContainer
+  width: 50%
+  height: 100%
+  padding: 13px
+  border-right: 1.5px solid rgba(15, 15, 15, 0.4)
+  font-family: "Lato", sans-serif
+  
+.previewContainer
+  width: 50%
+  height: 100%
+  padding: 13px
+  font-family: "Lato", sans-serif
+  
+.textarea
+  width: 100%
+  height: 100vh
+  resize: none
+  border: none
+  outline: none
+  font-size: 17px
+  	
+
+#preview 
+  blockquote 
+    border-left: 3px solid #224b4b
+    color: #224b4b
+    padding-left: 5px
+    margin-left: 25px
+  
+
+  code 
+    background: white
+    padding: 1px 4px 2px 4px
+    font-size: 12px
+    font-weight: bold
+  
+
+  pre 
+    background: white
+    padding: 5px 0 5px 5px
+  
+
+  h1 
+    border-bottom: 2px solid $darkAccent
+  
+
+  h2 
+    border-bottom: 1px solid $darkAccent
+  
+
+  table 
+    border-collapse: collapse
+  
+
+  td,
+  th 
+    border: 2px solid $darkAccent
+    padding-left: 5px
+    padding-right: 5px
+  
+  .line-break 
+    white-space: pre-wrap
+  

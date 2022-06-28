@@ -1,0 +1,245 @@
+const equalsStyle = {
+    background: '#FC987D',
+    position: 'absolute',
+    height: 130,
+    bottom: 5
+  };
+
+
+const App = () => {
+  
+  const elements = [{
+    id: "clear",
+    label: "AC"
+  },
+  { 
+    id: "divide",
+    label: "/"
+  },
+  { 
+    id: "multiply",
+    label: "x"
+  },
+  {
+    id: "seven",
+    label: "7"
+  },
+  {
+    id: "eight",
+    label: "8"
+  },
+  {
+    id: "nine",
+    label: "9"
+  },
+  {
+    id: "subtract",
+    label: "-"
+  },
+  {
+    id: "four",
+    label: "4"
+  },
+  {
+    id: "five",
+    label: "5"
+  },
+  {
+    id: "six",
+    label: "6"
+  },
+  {
+    id: "add",
+    label: "+"
+  },
+  {
+    id: "one",
+    label: "1"
+  },
+  {
+    id: "two",
+    label: "2"
+  },
+  {
+    id: "three",
+    label: "3"
+  },
+  {
+    id: "zero",
+    label: "0"
+  },
+  {
+    id: "decimal",
+    label: "."
+  },
+  {
+    id: "equals",
+    label: "="
+  }]
+  
+  const [output, setOutput] = React.useState(0)
+  const [result, setResult] = React.useState(0)
+  const [currentValue, setCurrentValue] = React.useState("")
+  const [formula, setFormula] = React.useState([])
+  const number = React.useRef("")
+  const operator = React.useRef("")
+  
+  const evaluate = () => {
+      
+    if(currentValue !== "="){
+      if(operator.current === "+"){
+        number.current = (+result + +number.current).toString()
+        setOutput(number.current)
+        
+      }else if(operator.current === "x"){
+        number.current = (+result * +number.current).toString()
+        setOutput(number.current)
+       
+      }else if(operator.current === "/"){
+        number.current = (+result / +number.current).toString()
+        setOutput(number.current)
+ 
+      }else if(operator.current === "-"){
+        number.current = (+result - +number.current).toString()
+        setOutput(number.current)
+      }
+    }else{
+      return;
+    }
+  }
+  
+  const numbersHandler = (e) => {
+    const num = e.target.value  
+    if(formula.includes("=")){
+      clearHandler(e)
+      setFormula(num)
+    }else{
+      setFormula(formula.concat(num))
+    }    
+    number.current[0]==="0" ? number.current = `${num}` : number.current = `${number.current}${num}`
+    setOutput(number.current)
+    console.log("sa" + number.current)
+  }
+  
+  const operatorHandler = (e) => {
+    const op = e.target.value
+    if(currentValue.includes("+") || currentValue.includes("x") || currentValue.includes("/") || currentValue.includes("-")){
+      if(op === "-"){  
+         operator.current = `${currentValue}`
+         console.log(operator.current)
+         number.current = `${number.current}${op}`
+         console.log(number.current)
+      }else{
+        operator.current = `${op}`
+        number.current = ""
+      }
+      setFormula(formula.concat(op)) 
+    }else{
+      if((formula.includes("+") || formula.includes("x") ||  formula.includes("/") || formula.includes("-"))){
+      evaluate() 
+      setFormula([number.current, op])
+      }
+      else {
+        setFormula(formula.concat(op))  
+      }
+      operator.current = `${op}`
+      setResult(number.current)
+      number.current = ""
+      }
+  } 
+  
+  const clearHandler = (e) => {
+    setCurrentValue("")
+    setFormula([])
+    setResult(0)
+    setOutput(0)
+    number.current = ""
+  }
+  
+  const equalsHandler = (e) => {  
+    if(formula.includes("=")){
+      return;
+    }else{
+      evaluate()
+      setFormula(formula.concat(e.target.value, number.current))
+    }
+  }
+  
+  const decimalHandler = (e) => { 
+    console.log(currentValue)
+    console.log((/[0-9]/g).test(+currentValue))
+    if((/[0-9]/g).test(+currentValue)){
+      if(number.current.includes(".")){
+        return;
+      }
+      number.current = `${number.current}${e.target.value}`
+      setFormula(formula.concat(e.target.value))
+    }
+    
+  }
+  
+  const calculate = (e) => {
+    const numpad = e.target.value
+    setCurrentValue(numpad)
+    if(numpad === "/" || numpad === "x" || numpad === "-" || numpad === "+"){
+      if(formula.length == 0){
+        return;
+      }else{
+        operatorHandler(e)
+      }
+    }
+    else if(numpad === "AC"){
+      clearHandler(e)
+    }
+    else if(numpad === "="){
+      equalsHandler(e)
+    }
+    else if(numpad === "."){
+      decimalHandler(e)
+    }
+    else{
+      numbersHandler(e)
+    }
+  }
+  
+  return(
+    <div>
+      <div className="calculator">
+        <div  className="formulaScreen">
+          {formula}
+        </div>
+        <div id="display" className="outputScreen">
+             {output} 
+        </div>
+        <div>
+            {elements.map(({id, label}) => (
+              <Button 
+                className={(id === "clear" || id === "zero") ? "jumbo" : null} 
+                styles={id === "equals" ? equalsStyle : null}
+                id={id} value={label} 
+                disabled={(id === "zero" && number.current[0] === "0") ? true : false}
+                onClick={calculate} />
+            ))}
+        </div>
+        </div>
+     </div>
+  )
+}
+
+const Button = ({value, id, onClick, className, styles, disabled}) => {
+  
+  return(
+      <button
+        className={className}
+        id={id}
+        value={value}
+        onClick={onClick}
+        style={styles}
+        disabled={disabled}
+        >
+        {value}
+      </button>
+  )
+}
+
+ReactDOM.render(<App />, document.getElementById("app"));
